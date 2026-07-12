@@ -12,6 +12,8 @@ Optional:
     - instance_count
     - public_network_access_enabled
     - sensitive_environment_variables
+    - sensitive_environment_variables_key_vault_id (alternative to sensitive_environment_variables - read from Key Vault instead)
+    - sensitive_environment_variables_key_vault_secret_name (alternative to sensitive_environment_variables - read from Key Vault instead)
     - api_metadata (block):
         - description (optional)
         - documentation_url (optional)
@@ -46,15 +48,17 @@ Optional:
 EOT
 
   type = map(object({
-    name                                     = string
-    spring_cloud_service_id                  = string
-    application_performance_monitoring_ids   = optional(list(string))
-    application_performance_monitoring_types = optional(list(string))
-    environment_variables                    = optional(map(string))
-    https_only                               = optional(bool)
-    instance_count                           = optional(number) # Default: 1
-    public_network_access_enabled            = optional(bool)
-    sensitive_environment_variables          = optional(map(string))
+    name                                                  = string
+    spring_cloud_service_id                               = string
+    application_performance_monitoring_ids                = optional(list(string))
+    application_performance_monitoring_types              = optional(list(string))
+    environment_variables                                 = optional(map(string))
+    https_only                                            = optional(bool)
+    instance_count                                        = optional(number) # Default: 1
+    public_network_access_enabled                         = optional(bool)
+    sensitive_environment_variables                       = optional(map(string))
+    sensitive_environment_variables_key_vault_id          = optional(string)
+    sensitive_environment_variables_key_vault_secret_name = optional(string)
     api_metadata = optional(object({
       description       = optional(string)
       documentation_url = optional(string)

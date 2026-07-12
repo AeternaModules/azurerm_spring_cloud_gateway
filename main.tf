@@ -1,3 +1,8 @@
+data "azurerm_key_vault_secret" "sensitive_environment_variables" {
+  for_each     = { for k, v in var.spring_cloud_gateways : k => v if v.sensitive_environment_variables_key_vault_id != null && v.sensitive_environment_variables_key_vault_secret_name != null }
+  name         = each.value.sensitive_environment_variables_key_vault_secret_name
+  key_vault_id = each.value.sensitive_environment_variables_key_vault_id
+}
 resource "azurerm_spring_cloud_gateway" "spring_cloud_gateways" {
   for_each = var.spring_cloud_gateways
 
@@ -9,7 +14,7 @@ resource "azurerm_spring_cloud_gateway" "spring_cloud_gateways" {
   https_only                               = each.value.https_only
   instance_count                           = each.value.instance_count
   public_network_access_enabled            = each.value.public_network_access_enabled
-  sensitive_environment_variables          = each.value.sensitive_environment_variables
+  sensitive_environment_variables          = each.value.sensitive_environment_variables != null ? each.value.sensitive_environment_variables : try(data.azurerm_key_vault_secret.sensitive_environment_variables[each.key].value, null)
 
   dynamic "api_metadata" {
     for_each = each.value.api_metadata != null ? [each.value.api_metadata] : []
