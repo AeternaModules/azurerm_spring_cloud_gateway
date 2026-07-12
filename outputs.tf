@@ -1,3 +1,7 @@
+output "spring_cloud_gateways_id" {
+  description = "Map of id values across all spring_cloud_gateways, keyed the same as var.spring_cloud_gateways"
+  value       = { for k, v in azurerm_spring_cloud_gateway.spring_cloud_gateways : k => v.id }
+}
 output "spring_cloud_gateways_api_metadata" {
   description = "Map of api_metadata values across all spring_cloud_gateways, keyed the same as var.spring_cloud_gateways"
   value       = { for k, v in azurerm_spring_cloud_gateway.spring_cloud_gateways : k => v.api_metadata }
