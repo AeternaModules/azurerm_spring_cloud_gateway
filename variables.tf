@@ -54,7 +54,7 @@ EOT
     application_performance_monitoring_types              = optional(list(string))
     environment_variables                                 = optional(map(string))
     https_only                                            = optional(bool)
-    instance_count                                        = optional(number) # Default: 1
+    instance_count                                        = optional(number)
     public_network_access_enabled                         = optional(bool)
     sensitive_environment_variables                       = optional(map(string))
     sensitive_environment_variables_key_vault_id          = optional(string)
@@ -88,8 +88,8 @@ EOT
       time_to_live = optional(string)
     }))
     quota = optional(object({
-      cpu    = optional(string) # Default: "1"
-      memory = optional(string) # Default: "2Gi"
+      cpu    = optional(string)
+      memory = optional(string)
     }))
     sso = optional(object({
       client_id     = optional(string)
